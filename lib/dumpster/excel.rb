@@ -13,8 +13,10 @@ module Dumpster
         File.read(file.path)
       end
 
-      def write_to_file(path)
+      def write_to_file(path, autowidth=true, trust_input=false)
+        Axlsx::trust_input = trust_input
         package = Axlsx::Package.new
+        package.use_autowidth = autowidth
         draw(package)
         package.serialize(path)
       end
@@ -22,7 +24,7 @@ module Dumpster
       def draw(package)
         package.workbook.add_worksheet(:name => "Worksheet 1") do |sheet|
           @model.each do |row|
-            sheet.add_row(row)
+            sheet.add_row(row, types: @model.types)
           end
         end
       end
