@@ -19,7 +19,7 @@ describe Dumpster::Excel::Writer do
 
     subject.write_to_file(output_path)
 
-    File.exists?(output_path).should be_true
+    File.exists?(output_path).should be true
   end
 
   it 'enable auto filtering on the table' do
@@ -29,6 +29,6 @@ describe Dumpster::Excel::Writer do
     subject.extend Dumpster::Excel::AutoFilter
     subject.write_to_file(output_path)
 
-    File.exists?(output_path).should be_true
+    File.exists?(output_path).should be true
   end
 end
