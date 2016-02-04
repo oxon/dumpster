@@ -4,13 +4,6 @@ require_relative '../../integration/spec_helper'
 describe Dumpster::Excel::Writer do
 
   context 'performance when using' do
-    path = File.join(File.dirname(__FILE__), 'output')
-
-    before(:all) do
-      Dir.glob(File.join(path, '/perf-test-*.xlsx')) do |file|
-        File.delete file
-      end
-    end
 
     let!(:data) { 5000.times.collect { |t| ['row-' + t.to_s, 11 * t, 11.1 / (t+1), 1111 * t, 'balsd ü sad ksad öéöàä'] } }
     let!(:model) { Dumpster::Model::Generic.new(data) }
