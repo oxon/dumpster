@@ -17,38 +17,33 @@ describe Dumpster::Excel::Writer do
     let!(:model_with_types) { Dumpster::Model::Generic.new(data, [:string, :integer, :float, :integer, :string]) }
 
     it 'default' do
-      output_path = File.join(path, 'perf-test-bare.xlsx')
       writer = Dumpster::Excel::Writer.new(model)
 
-      writer.write_to_file(output_path)
+      writer.write_to_string()
     end
 
     it 'no autowidth' do
-      output_path = File.join(path, 'perf-test_no_autowidth.xlsx')
       writer = Dumpster::Excel::Writer.new(model)
 
-      writer.write_to_file(output_path, autowidth=false)
+      writer.write_to_string({ autowidth: false })
     end
 
     it 'use types' do
-      output_path = File.join(path, 'perf-test_with_types.xlsx')
       writer = Dumpster::Excel::Writer.new(model_with_types)
 
-      writer.write_to_file(output_path)
+      writer.write_to_string()
     end
 
     it 'use trust input' do
-      output_path = File.join(path, 'perf-test-with_trusted-input.xlsx')
       writer = Dumpster::Excel::Writer.new(model)
 
-      writer.write_to_file(output_path, trust_input=true)
+      writer.write_to_string({ trust_input: true })
     end
 
     it 'use all optimisations' do
-      output_path = File.join(path, 'perf-test-all-optimisations.xlsx')
       writer = Dumpster::Excel::Writer.new(model_with_types)
 
-      writer.write_to_file(output_path, autowidth=false, trust_input=true)
+      writer.write_to_string({ autowidth: false, trust_input: true })
     end
   end
 end

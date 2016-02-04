@@ -7,13 +7,18 @@ module Dumpster
         @model = model
       end
 
-      def write_to_string
+      def write_to_string(options = {})
         file = Tempfile.new('dumpster_excel_export.xlsx')
-        write_to_file(file.path)
+        write_to_file(file.path, options)
         File.read(file.path)
       end
 
-      def write_to_file(path, autowidth=true, trust_input=false)
+      def write_to_file(path, options = {})
+        options = { autowidth: true, trust_input: false }.merge(options)
+        autowidth = options.delete(:autowidth)
+        trust_input = options.delete(:trust_input)
+        raise "unexpected options: #{options}" unless options.empty?
+
         Axlsx::trust_input = trust_input
         package = Axlsx::Package.new
         package.use_autowidth = autowidth
