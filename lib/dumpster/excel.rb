@@ -14,14 +14,16 @@ module Dumpster
       end
 
       def write_to_file(path, options = {})
-        options = { autowidth: true, trust_input: false }.merge(options)
+        options = { autowidth: true, trust_input: false, shared_strings: false }.merge(options)
         autowidth = options.delete(:autowidth)
         trust_input = options.delete(:trust_input)
+        shared_strings = options.delete(:shared_strings)
         raise "unexpected options: #{options}" unless options.empty?
 
         Axlsx::trust_input = trust_input
         package = Axlsx::Package.new
         package.use_autowidth = autowidth
+        package.use_shared_strings = shared_strings
         draw(package)
         package.serialize(path)
       end
